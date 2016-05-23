@@ -1,0 +1,41 @@
+{
+  "name": "reactive-goban",
+  "version": "0.1.0",
+  "description": "A Javascript representation of a Go game and a React component able to render it",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --recursive --compilers js:babel-core/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kaidjin/reactive-goban.git"
+  },
+  "keywords": [
+    "Go",
+    "sgf",
+    "react",
+    "component",
+    "goban"
+  ],
+  "author": "Benoit AVERTY",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kaidjin/reactive-goban/issues"
+  },
+  "homepage": "https://github.com/Kaidjin/reactive-goban#readme",
+  "devDependencies": {
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "chai": "^3.5.0",
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.8.0",
+    "eslint-plugin-jsx-a11y": "^1.2.2",
+    "eslint-plugin-react": "^5.1.1",
+    "mocha": "^2.5.1"
+  }
+}
