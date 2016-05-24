@@ -1,7 +1,8 @@
-import GameMetadata from './GameMetadata';
-
 function GoGame() {
-  this.metadata = new GameMetadata();
+  this.stones = [];
+  this.moves = [];
+  this.ko = null;
+  this.marks = [];
 }
 
 GoGame.prototype = {};

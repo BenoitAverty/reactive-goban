@@ -2,8 +2,6 @@
 
 import { expect } from 'chai';
 
-import GameMetadata from '../../src/GoGame/GameMetadata';
-
 import { GoGame } from '../../src';
 
 describe('Creating a new Game', () => {
