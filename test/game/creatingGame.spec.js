@@ -17,5 +17,14 @@ describe('Creating a new Game', () => {
 
       expect(game.metadata).to.exist.and.be.an.instanceof(GameMetadata);
     });
+
+    it('Should have a GameMetadata property that corresponds to an empty Game Metadata', () => {
+      const game = new GoGame();
+
+      const expected = new GameMetadata();
+      const actual = game.metadata;
+
+      expect(actual).to.deep.equal(expected);
+    });
   });
 });
