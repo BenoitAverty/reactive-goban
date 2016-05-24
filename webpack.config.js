@@ -5,7 +5,7 @@ module.exports = {
     'react-goban-example': './examples/react-goban-example.js',
   },
   output: {
-    path: path.resolve(__dirname, 'examples/dist'),
+    path: path.resolve(__dirname, 'examples'),
     filename: '[name].dist.js',
   },
   module: {

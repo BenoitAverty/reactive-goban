@@ -34,3 +34,4 @@ node_modules
 
 # build artefacts
 **/dist/*
+**/*.dist.js
