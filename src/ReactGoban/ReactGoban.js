@@ -21,15 +21,15 @@ const constructJsxBoard = (board) => {
   );
 };
 
-const ReactGoban = ({ game }) =>
+const ReactGoban = ({ board }) =>
   <div>
     <h1>Go Game:</h1>
-    {constructJsxBoard(game.board)}
+    {constructJsxBoard(board)}
   </div>
 ;
 
 ReactGoban.propTypes = {
-  game: React.PropTypes.object,
+  board: React.PropTypes.object,
 };
 
 export default ReactGoban;
