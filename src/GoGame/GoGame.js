@@ -3,9 +3,13 @@ import _ from 'lodash';
 import goGameReducer from './reducer';
 import actions from './actions';
 
-function GoGame() {
-  Object.assign(this, goGameReducer(undefined, actions.init()));
+// Create a GoGame object using the reducer. If the 'game' param is
+// undefined, the reducer will use the initial state.
+// The object is then deeply frozen to ensure its immutability.
+function GoGame(game) {
+  Object.assign(this, goGameReducer(game, actions.init()));
 }
+
 
 GoGame.prototype = {
   get ko() {

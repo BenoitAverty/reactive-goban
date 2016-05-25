@@ -1,19 +1,28 @@
+import _ from 'lodash';
+import deepFreeze from 'deep-freeze';
+
 import playMoveReducer from './playMoveReducer';
 
 const initialGame = {
-  board: {},
+  board: _.map(Array(19), () => _.fill(Array(19), {})),
   moves: [],
   koCoordinates: null,
   actions: [],
 };
 
 const goGameReducer = (game = initialGame, action) => {
+  let resultGame;
+
   switch (action.type) {
     case 'PLAY_MOVE':
-      return playMoveReducer(game, action);
+      resultGame = playMoveReducer(game, action);
+      break;
     default:
-      return game;
+      resultGame = game;
   }
+
+  deepFreeze(resultGame);
+  return resultGame;
 };
 
 export default goGameReducer;

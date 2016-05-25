@@ -1,15 +1,16 @@
 /* eslint-env mocha */
-
+import _ from 'lodash';
 import { expect } from 'chai';
 
 import { GoGame } from '../../src';
 
 describe('GoGame', () => {
   describe('default / empty GoGame object', () => {
-    it('Should contain an empty object as board property', () => {
+    it('Should contain a 19x19 array of empty objects', () => {
       const game = new GoGame();
+      const expected = _.map(Array(19), () => _.fill(Array(19), {}));
 
-      expect(game.board).to.deep.equal({});
+      expect(game.board).to.deep.equal(expected);
     });
 
     it('Should have the ko property set to false', () => {
