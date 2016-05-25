@@ -12,13 +12,6 @@ describe('Game Reducer', () => {
 
       expect(result).to.equal(state);
     });
-
-    it('Should return a default GoGame object when no state is passed', () => {
-      const expected = new GoGame();
-      const actual = goGameReducer(undefined, actions.init());
-
-      expect(actual).to.deep.equal(expected);
-    });
   });
 
   describe('With the playMove(i,j) action', () => {
