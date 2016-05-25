@@ -41,6 +41,17 @@ describe('Game Reducer', () => {
         newGame = goGameReducer(newGame, actions.playMove(16, 16));
         expect(newGame.board[16][16]).to.exist.and.deep.equal(expectedWhiteSone);
       });
+
+      it('Should have saved the action with a status of "SUCCESS"', () => {
+        const game = new GoGame();
+        const action = actions.playMove(15, 15);
+
+        const newGame = goGameReducer(game, action);
+
+        expect(newGame.actions[0]).to.exist;
+        expect(newGame.actions[0].status).to.equal('SUCCESS');
+        expect(newGame.actions[0].action).to.equal(action);
+      });
     });
   });
 });
