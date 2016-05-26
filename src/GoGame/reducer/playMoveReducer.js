@@ -8,8 +8,8 @@ const playMoveReducer = (game, action) => {
   const newMoves = _.concat(game.moves, { i, j });
 
   const newBoard = _.clone(game.board);
-  newBoard[i] = _.clone(game.board[i]);
-  newBoard[i][j] = Object.assign({}, game.board[i][j], { stone: turn });
+  newBoard[i-1] = _.clone(game.board[i-1]);
+  newBoard[i-1][j-1] = Object.assign({}, game.board[i-1][j-1], { stone: turn });
 
   const newActions = _.concat(game.actions, { status: 'SUCCESS', action });
 

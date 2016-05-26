@@ -1,0 +1,28 @@
+.reactive-goban {
+  width: 540px;
+  height: 550px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.reactive-goban-line {
+  display: flex;
+  flex: 1;
+}
+
+.reactive-goban-intersection {
+  border: 1px dotted black;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reactive-goban-stone-black:before {
+  content: 'B';
+}
+
+.reactive-goban-stone-white:before {
+  content: 'W';
+}

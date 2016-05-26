@@ -4,5 +4,7 @@
     "no-unused-expressions": "off",
     "space-infix-ops": "off",
     "default-case": "off",
+    "no-else-return": "off",
+    "brace-style": ["error", "stroustrup"],
   }
 }

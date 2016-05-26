@@ -2,15 +2,29 @@ import React from 'react';
 import _ from 'lodash';
 
 const constructJsxBoard = (board) => {
-
-  const line = _.map(Array(19), (i, index) => <div key={index} className="goban-item-empty"></div>);
-  const lines = _.map(Array(19), (i, index) => (
-    <div key={index} className="goban-line">{_.clone(line)}</div>
+  const jsxBoard = _.map(board, (row, rowIndex) => (
+    <div className="reactive-goban-line" key={rowIndex}>{
+        _.map(row, (intersection, columnIndex) => {
+          if (intersection.stone !== undefined) {
+            return (
+              <div key={`${rowIndex}${columnIndex}`} className="reactive-goban-intersection">
+                <span className={`reactive-goban-stone-${intersection.stone.toLowerCase()}`} />
+              </div>
+            );
+          }
+          else {
+            return (
+              <div key={`${rowIndex}${columnIndex}`} className="reactive-goban-intersection">
+              </div>
+            );
+          }
+        })
+    }</div>
   ));
 
   return (
-    <div>
-      {lines}
+    <div className="reactive-goban">
+      {jsxBoard}
     </div>
   );
 };
