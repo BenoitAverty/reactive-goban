@@ -6,5 +6,10 @@
     "default-case": "off",
     "no-else-return": "off",
     "brace-style": ["error", "stroustrup"],
-  }
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+    }
+  },
 }

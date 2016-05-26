@@ -8,5 +8,16 @@ game = goGameReducer(game, actions.playMove(3, 3));
 game = goGameReducer(game, actions.playMove(16, 16));
 game = goGameReducer(game, actions.playMove(19, 19));
 
+function handleClick(i, j) {
+  game = goGameReducer(game, actions.playMove(i, j));
+  renderBoard(game.board); // eslint-disable-line no-use-before-define
+}
 
-ReactDom.render(<ReactGoban board={game.board} />, document.getElementById('app'));
+function renderBoard(board) {
+  ReactDom.render(
+    <ReactGoban board={board} onIntersectionClick={handleClick} />,
+    document.getElementById('app')
+  );
+}
+
+renderBoard(game.board);

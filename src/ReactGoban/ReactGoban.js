@@ -1,21 +1,28 @@
 import React from 'react';
 import _ from 'lodash';
 
-const constructJsxBoard = (board) => {
+function constructJsxBoard(board, onIntersectionClick) {
   const jsxBoard = _.map(board, (row, rowIndex) => (
     <div className="reactive-goban-line" key={rowIndex}>{
         _.map(row, (intersection, columnIndex) => {
           if (intersection.stone !== undefined) {
             return (
-              <div key={`${rowIndex}${columnIndex}`} className="reactive-goban-intersection">
+              <div
+                key={`${rowIndex}${columnIndex}`}
+                className="reactive-goban-intersection"
+                onClick={(event) => onIntersectionClick(rowIndex+1, columnIndex+1, event)}
+              >
                 <span className={`reactive-goban-stone-${intersection.stone.toLowerCase()}`} />
               </div>
             );
           }
           else {
             return (
-              <div key={`${rowIndex}${columnIndex}`} className="reactive-goban-intersection">
-              </div>
+              <div
+                key={`${rowIndex}${columnIndex}`}
+                className="reactive-goban-intersection"
+                onClick={(event) => onIntersectionClick(rowIndex+1, columnIndex+1, event)}
+              />
             );
           }
         })
@@ -27,17 +34,18 @@ const constructJsxBoard = (board) => {
       {jsxBoard}
     </div>
   );
-};
+}
 
-const ReactGoban = ({ board }) =>
+const ReactGoban = ({ board, onIntersectionClick }) =>
   <div>
     <h1>Go Game:</h1>
-    {constructJsxBoard(board)}
+    {constructJsxBoard(board, onIntersectionClick)}
   </div>
 ;
 
 ReactGoban.propTypes = {
-  board: React.PropTypes.array,
+  board: React.PropTypes.array.required,
+  onIntersectionClick: React.PropTypes.func,
 };
 
 export default ReactGoban;
