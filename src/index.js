@@ -3,3 +3,5 @@ export { default as goGameReducer } from './GoGame/reducer';
 export { default as actions } from './GoGame/actions';
 
 export { default as ReactGoban } from './ReactGoban/ReactGoban';
+
+export { default as CycleGoban } from './CycleGoban/CycleGoban';

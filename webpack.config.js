@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = {
   entry: {
     'react-goban-example': './examples/react-goban-example.js',
+    'cycle-goban-example': './examples/cycle-goban-example.js',
   },
   output: {
     path: path.resolve(__dirname, 'examples'),
