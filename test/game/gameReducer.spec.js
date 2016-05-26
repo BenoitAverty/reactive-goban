@@ -1,5 +1,6 @@
 /* eslint-env mocha */
 
+import _ from 'lodash';
 import { expect } from 'chai';
 
 import { goGameReducer, GoGame, actions } from '../../src';
@@ -87,16 +88,25 @@ describe('Game Reducer', () => {
         expect(newGame.moves).to.equal(game.moves);
       });
 
-      // it('Should save the action with status "FAILURE" and reason "EXISTING_STONE"', () => {
-      //   const game = goGameReducer(new GoGame(), actions.playMove(3, 3));
-      //   const action = actions.playMove(3, 3);
-      //   const newGame = goGameReducer(game, action);
-      //
-      //   const savedAction = newGame.actions[1];
-      //   expect(savedAction.action).to.equal(action);
-      //   expect(savedAction.status).to.equal('FAILURE');
-      //   expect(savedAction.reason).to.equal('EXISTING_STONE');
-      // });
+      it('Should save the action with status "FAILURE" and reason "OUTSIDE_BOARD"', () => {
+        const game = new GoGame();
+
+        const playActions = [
+          actions.playMove(3, 20),
+          actions.playMove(0, 3),
+          actions.playMove(20, 3),
+          actions.playMove(3, 0),
+        ];
+
+        _.forEach(playActions, (action) => {
+          const newGame = goGameReducer(game, action);
+
+          const savedAction = newGame.actions[0];
+          expect(savedAction.action).to.equal(action);
+          expect(savedAction.status).to.equal('FAILURE');
+          expect(savedAction.reason).to.equal('OUTSIDE_BOARD');
+        });
+      });
     });
   });
 });

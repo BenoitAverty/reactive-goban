@@ -1,15 +1,15 @@
 import _ from 'lodash';
 
-const isMovePossible = ({ i, j }, board) => {
+const getMoveValidity = ({ i, j }, board) => {
   if (i < 1 || i > 19 || j < 1 || j > 19) {
-    return false;
+    return { valid: false, reason: 'OUTSIDE_BOARD' };
   }
 
   if (board[i-1][j-1].stone !== undefined && board[i-1][j-1].stone !== null) {
-    return false;
+    return { valid: false, reason: 'EXISTING_STONE' };
   }
 
-  return true;
+  return { valid: true };
 };
 
 const playMoveReducer = (game, action) => {
@@ -17,7 +17,8 @@ const playMoveReducer = (game, action) => {
   const j = action.j;
   const turn = (game.moves.length % 2 === 0) ? 'BLACK' : 'WHITE';
 
-  if (isMovePossible({ i, j }, game.board)) {
+  const moveValidity = getMoveValidity({ i, j }, game.board);
+  if (moveValidity.valid) {
     const newMoves = _.concat(game.moves, { i, j });
 
     const newBoard = _.clone(game.board);
@@ -36,7 +37,7 @@ const playMoveReducer = (game, action) => {
   else {
     const newActions = _.concat(game.actions, {
       status: 'FAILURE',
-      reason: 'EXISTING_STONE',
+      reason: moveValidity.reason,
       action,
     });
 
