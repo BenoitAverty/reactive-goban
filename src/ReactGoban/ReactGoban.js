@@ -2,22 +2,16 @@ import React from 'react';
 import _ from 'lodash';
 
 const constructJsxBoard = (board) => {
-  const filledBoard = _.map(Array(19), () => _.fill(Array(19), '_'));
 
-  _.forOwn(board, (line, i) => {
-    _.forOwn(line, (column, j) => {
-      filledBoard[i-1][j-1] = 'x';
-    });
-  });
-
-  const ret = _(filledBoard)
-  .map(line => _.reduce(line, (lineBefore, el) => lineBefore + el, ''))
-  .map((line, index) => (<span key={index}>{line}<br /></span>));
+  const line = _.map(Array(19), (i, index) => <div key={index} className="goban-item-empty"></div>);
+  const lines = _.map(Array(19), (i, index) => (
+    <div key={index} className="goban-line">{_.clone(line)}</div>
+  ));
 
   return (
-    <pre>
-      {_.toArray(ret)}
-    </pre>
+    <div>
+      {lines}
+    </div>
   );
 };
 
@@ -29,7 +23,7 @@ const ReactGoban = ({ board }) =>
 ;
 
 ReactGoban.propTypes = {
-  board: React.PropTypes.object,
+  board: React.PropTypes.array,
 };
 
 export default ReactGoban;
