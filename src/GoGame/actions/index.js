@@ -7,7 +7,12 @@ const playMove = (i, j) => ({
   j,
 });
 
+const pass = () => ({
+  type: 'PASS',
+});
+
 export default {
   init,
   playMove,
+  pass,
 };

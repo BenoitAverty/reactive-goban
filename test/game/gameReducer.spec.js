@@ -109,4 +109,25 @@ describe('Game Reducer', () => {
       });
     });
   });
+
+  describe('With the pass() action', () => {
+    it('Should not modify the board', () => {
+      const game = new GoGame();
+
+      const newGame = goGameReducer(game, actions.pass());
+
+      expect(newGame.board).to.equal(game.board);
+    });
+
+    it('Should add a move with coordinates undefined', () => {
+      const game = new GoGame();
+
+      const newGame = goGameReducer(game, actions.pass());
+      const lastMove = newGame.moves[0];
+
+      expect(lastMove).to.exist;
+      expect(lastMove.i).to.not.exist;
+      expect(lastMove.j).to.not.exist;
+    });
+  });
 });
