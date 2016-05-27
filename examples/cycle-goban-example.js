@@ -1,11 +1,12 @@
 import Cycle from '@cycle/core';
-import Rx from 'rx';
 
 import { CycleGoban, actions } from '../src';
 
-const main = () => ({
-  Goban: Rx.Observable.just(actions.playMove(3, 3)),
-});
+const main = ({ Goban }) => {
+  const actions$ = Goban.clicks.map(click => actions.playMove(click.i, click.j));
+
+  return { Goban: actions$ };
+};
 
 const drivers = {
   Goban: CycleGoban.makeCycleGobanDriver('#app'),
