@@ -108,6 +108,24 @@ describe('Game Reducer', () => {
         });
       });
     });
+
+    describe('Capturing a stone', () => {
+      it('Should remove the captured stone from the board', () => {
+        const plays = [
+          actions.playMove(3, 4),
+          actions.playMove(4, 4),
+          actions.playMove(4, 3),
+          actions.pass(),
+          actions.playMove(4, 5),
+          actions.pass(),
+          actions.playMove(5, 4),
+        ];
+
+        const game = _.reduce(plays, goGameReducer, new GoGame());
+
+        expect(game.board[3][3]).to.deep.equal({ stone: null });
+      });
+    });
   });
 
   describe('With the pass() action', () => {
@@ -128,6 +146,17 @@ describe('Game Reducer', () => {
       expect(lastMove).to.exist;
       expect(lastMove.i).to.not.exist;
       expect(lastMove.j).to.not.exist;
+    });
+
+    it('Should save the action with a status of "SUCCESS"', () => {
+      const game = new GoGame();
+      const action = actions.pass();
+
+      const newGame = goGameReducer(game, action);
+
+      expect(newGame.actions[0]).to.exist;
+      expect(newGame.actions[0].status).to.equal('SUCCESS');
+      expect(newGame.actions[0].action).to.equal(action);
     });
   });
 });

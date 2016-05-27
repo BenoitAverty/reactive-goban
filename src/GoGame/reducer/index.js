@@ -15,7 +15,11 @@ const goGameReducer = (game = initialGame, action) => {
 
   switch (action.type) {
     case 'PASS':
-      resultGame = { ...game, moves: _.concat(game.moves, {}) };
+      resultGame = {
+        ...game,
+        moves: _.concat(game.moves, {}),
+        actions: _.concat(game.actions, { status: 'SUCCESS', action }),
+      };
       break;
     case 'PLAY_MOVE':
       resultGame = playMoveReducer(game, action);
