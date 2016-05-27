@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/Kaidjin/reactive-goban#readme",
   "devDependencies": {
+    "@cycle/core": "^6.0.3",
+    "@cycle/dom": "^9.4.0",
     "babel-core": "^6.9.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
@@ -46,6 +48,7 @@
     "mocha": "^2.5.1",
     "react-addons-test-utils": "^15.1.0",
     "react-dom": "^15.1.0",
+    "rx": "^4.1.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
