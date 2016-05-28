@@ -41,24 +41,22 @@ export function stoneGroup({ i, j }, board) {
 
   let group1 = [{ i, j }];
   let group2 = [{ i, j }, ...adjacentStones({ i, j }, board, groupColor)];
-  let size1 = 1;
-  let size2 = group2.length;
 
   const addToGroup1 = coord => {
-    size1 = group1.push(...adjacentStones(coord, board, groupColor));
+    group1.push(...adjacentStones(coord, board, groupColor));
   };
   const addToGroup2 = coord => {
-    size2 = group2.push(...adjacentStones(coord, board, groupColor));
+    group2.push(...adjacentStones(coord, board, groupColor));
   };
 
-  while (size1 !== size2) {
-    if (size1 < size2) {
+  while (group1.length !== group2.length) {
+    if (group1.length < group2.length) {
       _.forEach(group2, addToGroup1);
-      group1 = _.uniq(group1);
+      group1 = _.uniqWith(group1, _.isEqual);
     }
     else {
       _.forEach(group1, addToGroup2);
-      group2 = _.uniq(group2);
+      group2 = _.uniqWith(group2, _.isEqual);
     }
   }
 

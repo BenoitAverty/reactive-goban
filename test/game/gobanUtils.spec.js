@@ -8,7 +8,7 @@ function gobanFixture(coordinatesWithStones) {
   const board = _.map(Array(19), () => _.fill(Array(19), {}));
 
   _.forEach(coordinatesWithStones, (c) => {
-    board[c.i][c.j] = c;
+    board[c.i][c.j] = { stone: c.stone };
   });
 
   return board;
@@ -27,6 +27,20 @@ describe('gobanUtils', () => {
     it('Should return correctly the only stone of a group', () => {
       const board = gobanFixture([{ i: 3, j: 3, stone: 'BLACK' }]);
       const expected = [{ i: 3, j: 3 }];
+
+      const actual = stoneGroup({ i: 3, j: 3 }, board);
+
+      expect(actual).to.deep.equal(expected);
+    });
+
+    it('Should return correctly a group of several stones', () => {
+      const board = gobanFixture([
+        { i: 3, j: 3, stone: 'BLACK' },
+        { i: 3, j: 4, stone: 'BLACK' },
+        { i: 3, j: 5, stone: 'BLACK' },
+        { i: 4, j: 5, stone: 'BLACK' },
+      ]);
+      const expected = [{ i: 3, j: 3 }, { i: 3, j: 4 }, { i: 3, j: 5 }, { i: 4, j: 5 }];
 
       const actual = stoneGroup({ i: 3, j: 3 }, board);
 
