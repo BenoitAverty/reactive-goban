@@ -16,17 +16,27 @@ export function moveValidity({ i, j }, board) {
 // Return the coordinates of the stones adjacent to the given indices.
 // indices are assumed to be between 0 and 18 (real indices of the board array).
 // Optional parameter 'onlyColor' is used to specify if only the stones of the given color are to
-// be returned.
+// be returned. Pass null explicitely to return only empty intersections.
 // Does not return the indices of empty intersections.
 export function adjacentStones({ i, j }, board, onlyColor) {
-  const stoneFilter = coord =>
-    board[coord.i][coord.j] !== undefined &&
-    board[coord.i][coord.j] !== null &&
-    board[coord.i][coord.j].stone !== undefined &&
-    board[coord.i][coord.j].stone !== null &&
-    (onlyColor !== undefined ? board[coord.i][coord.j].stone === onlyColor : true);
+  const intersectionIsInGoban = coord => coord.i > 0 && coord.j > 0 && coord.i < 18 && coord.j < 18;
+  const intersectionIsEmpty = coord =>
+    board[coord.i][coord.j].stone === undefined ||
+    board[coord.i][coord.j].stone === null;
+  const intersectionIsNotEmpty = coord => !intersectionIsEmpty(coord);
+  const stoneHasRightColor = coord => onlyColor === board[coord.i][coord.j].stone;
 
-  return _.filter([{ i, j: j-1 }, { i: i-1, j }, { i: i+1, j }, { i, j: j+1 }], stoneFilter);
+  const neighbours = [{ i, j: j-1 }, { i: i-1, j }, { i: i+1, j }, { i, j: j+1 }]
+    .filter(intersectionIsInGoban);
+  if (onlyColor === undefined) {
+    return neighbours.filter(intersectionIsNotEmpty);
+  }
+  else if (onlyColor === null) {
+    return neighbours.filter(intersectionIsEmpty);
+  }
+  else {
+    return neighbours.filter(intersectionIsNotEmpty).filter(stoneHasRightColor);
+  }
 }
 
 // Return a list of all the indices in the board that belong to the same group as the given indices.
@@ -61,4 +71,15 @@ export function stoneGroup({ i, j }, board) {
   }
 
   return group1;
+}
+
+// Return the number of liberties of the stone or group at coordinates i, j (0-indexed)
+export function groupLiberties({ i, j }, board) {
+  const group = stoneGroup({ i, j }, board);
+  const liberties = [];
+  _.forEach(group, (s) => {
+    liberties.push(...adjacentStones({ i: s.i, j: s.j }, board, null));
+  });
+
+  return _.uniqWith(liberties, _.isEqual).length;
 }

@@ -2,7 +2,7 @@
 import _ from 'lodash';
 import { expect } from 'chai';
 
-import { stoneGroup } from '../../src/GoGame/gobanUtils';
+import { stoneGroup, groupLiberties } from '../../src/GoGame/gobanUtils';
 
 function gobanFixture(coordinatesWithStones) {
   const board = _.map(Array(19), () => _.fill(Array(19), {}));
@@ -15,7 +15,7 @@ function gobanFixture(coordinatesWithStones) {
 }
 
 describe('gobanUtils', () => {
-  describe('stoneGroup method', () => {
+  describe('stoneGroup function', () => {
     it('Should return an empty array when no stone is at coordinates', () => {
       const board = gobanFixture();
       const expected = [];
@@ -45,6 +45,41 @@ describe('gobanUtils', () => {
       const actual = stoneGroup({ i: 3, j: 3 }, board);
 
       expect(actual).to.deep.equal(expected);
+    });
+
+    it('Should not return adjacent stones of other colors', () => {
+      const board = gobanFixture([
+        { i: 3, j: 3, stone: 'BLACK' },
+        { i: 3, j: 4, stone: 'BLACK' },
+        { i: 3, j: 5, stone: 'WHITE' },
+        { i: 4, j: 5, stone: 'BLACK' },
+      ]);
+      const expected = [{ i: 3, j: 3 }, { i: 3, j: 4 }];
+
+      const actual = stoneGroup({ i: 3, j: 3 }, board);
+
+      expect(actual).to.deep.equal(expected);
+    });
+  });
+
+  describe('groupLiberties function', () => {
+    it('should count 4 liberties for a single stone', () => {
+      const board = gobanFixture([{ i: 3, j: 3, stone: 'BLACK' }]);
+
+      const liberties = groupLiberties({ i: 3, j: 3 }, board);
+
+      expect(liberties).to.equal(4);
+    });
+
+    it('Should count liberties of an entire group of stones', () => {
+      const board = gobanFixture([
+        { i: 3, j: 3, stone: 'BLACK' },
+        { i: 3, j: 4, stone: 'BLACK' },
+      ]);
+
+      const liberties = groupLiberties({ i: 3, j: 3 }, board);
+
+      expect(liberties).to.equal(6);
     });
   });
 });
