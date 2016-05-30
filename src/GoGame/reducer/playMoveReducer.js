@@ -15,6 +15,8 @@ function playMoveReducer(game, action) {
   if (validity.valid) {
     const newMoves = _.concat(game.moves, { i: action.i, j: action.j });
 
+    const newActions = _.concat(game.actions, { status: 'SUCCESS', action });
+
     const newBoard = _.clone(game.board);
     newBoard[i] = _.clone(game.board[i]);
     newBoard[i][j] = { ...game.board[i][j], stone: turn };
@@ -27,8 +29,6 @@ function playMoveReducer(game, action) {
         newBoard[coord.i] = _.clone(newBoard[coord.i]);
         newBoard[coord.i][coord.j] = { ...newBoard[coord.i][coord.j], stone: null };
       });
-
-    const newActions = _.concat(game.actions, { status: 'SUCCESS', action });
 
     return {
       ...game,

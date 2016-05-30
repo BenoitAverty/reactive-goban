@@ -147,6 +147,10 @@ describe('Game Reducer', () => {
         expect(game.board[3][4]).to.deep.equal({ stone: null });
       });
 
+      it.skip('Should not capture the group in which it\'s played', () => {
+        expect.fail();
+      });
+
       it('Should add a capture property to the last action', () => {
         const plays = [
           actions.playMove(3, 4),
