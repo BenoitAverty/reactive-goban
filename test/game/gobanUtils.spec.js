@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 import { stoneGroup, groupLiberties } from '../../src/GoGame/gobanUtils';
 
-function gobanFixture(coordinatesWithStones) {
+function aGoban(coordinatesWithStones) {
   const board = _.map(Array(19), () => _.fill(Array(19), {}));
 
   _.forEach(coordinatesWithStones, (c) => {
@@ -17,7 +17,7 @@ function gobanFixture(coordinatesWithStones) {
 describe('gobanUtils', () => {
   describe('stoneGroup function', () => {
     it('Should return an empty array when no stone is at coordinates', () => {
-      const board = gobanFixture();
+      const board = aGoban();
       const expected = [];
       const actual = stoneGroup({ i: 3, j: 3, stone: 'BLACK' }, board);
 
@@ -25,7 +25,7 @@ describe('gobanUtils', () => {
     });
 
     it('Should return correctly the only stone of a group', () => {
-      const board = gobanFixture([{ i: 3, j: 3, stone: 'BLACK' }]);
+      const board = aGoban([{ i: 3, j: 3, stone: 'BLACK' }]);
       const expected = [{ i: 3, j: 3 }];
 
       const actual = stoneGroup({ i: 3, j: 3 }, board);
@@ -34,7 +34,7 @@ describe('gobanUtils', () => {
     });
 
     it('Should return correctly a group of several stones', () => {
-      const board = gobanFixture([
+      const board = aGoban([
         { i: 3, j: 3, stone: 'BLACK' },
         { i: 3, j: 4, stone: 'BLACK' },
         { i: 3, j: 5, stone: 'BLACK' },
@@ -48,7 +48,7 @@ describe('gobanUtils', () => {
     });
 
     it('Should not return adjacent stones of other colors', () => {
-      const board = gobanFixture([
+      const board = aGoban([
         { i: 3, j: 3, stone: 'BLACK' },
         { i: 3, j: 4, stone: 'BLACK' },
         { i: 3, j: 5, stone: 'WHITE' },
@@ -64,7 +64,7 @@ describe('gobanUtils', () => {
 
   describe('groupLiberties function', () => {
     it('should count 4 liberties for a single stone', () => {
-      const board = gobanFixture([{ i: 3, j: 3, stone: 'BLACK' }]);
+      const board = aGoban([{ i: 3, j: 3, stone: 'BLACK' }]);
 
       const liberties = groupLiberties({ i: 3, j: 3 }, board);
 
@@ -72,7 +72,7 @@ describe('gobanUtils', () => {
     });
 
     it('Should count liberties of an entire group of stones', () => {
-      const board = gobanFixture([
+      const board = aGoban([
         { i: 3, j: 3, stone: 'BLACK' },
         { i: 3, j: 4, stone: 'BLACK' },
       ]);
@@ -80,6 +80,18 @@ describe('gobanUtils', () => {
       const liberties = groupLiberties({ i: 3, j: 3 }, board);
 
       expect(liberties).to.equal(6);
+    });
+
+    it('Should no count intersections with opponent\'s stone', () => {
+      const board = aGoban([
+        { i: 3, j: 3, stone: 'BLACK' },
+        { i: 3, j: 4, stone: 'BLACK' },
+        { i: 3, j: 5, stone: 'WHITE' },
+      ]);
+
+      const liberties = groupLiberties({ i: 3, j: 3 }, board);
+
+      expect(liberties).to.equal(5);
     });
   });
 });

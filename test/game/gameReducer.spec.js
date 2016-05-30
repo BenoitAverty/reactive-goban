@@ -125,6 +125,50 @@ describe('Game Reducer', () => {
 
         expect(game.board[3][3]).to.deep.equal({ stone: null });
       });
+
+      it('Should remove several captured stone from the board', () => {
+        const plays = [
+          actions.playMove(3, 4),
+          actions.playMove(4, 4),
+          actions.playMove(4, 3),
+          actions.playMove(4, 5),
+          actions.playMove(3, 5),
+          actions.pass(),
+          actions.playMove(4, 6),
+          actions.pass(),
+          actions.playMove(5, 4),
+          actions.pass(),
+          actions.playMove(5, 5),
+        ];
+
+        const game = _.reduce(plays, goGameReducer, new GoGame());
+
+        expect(game.board[3][3]).to.deep.equal({ stone: null });
+        expect(game.board[3][4]).to.deep.equal({ stone: null });
+      });
+
+      it('Should add a capture property to the last action', () => {
+        const plays = [
+          actions.playMove(3, 4),
+          actions.playMove(4, 4),
+          actions.playMove(4, 3),
+          actions.playMove(4, 5),
+          actions.playMove(3, 5),
+          actions.pass(),
+          actions.playMove(4, 6),
+          actions.pass(),
+          actions.playMove(5, 4),
+          actions.pass(),
+          actions.playMove(5, 5),
+        ];
+
+        const game = _.reduce(plays, goGameReducer, new GoGame());
+
+        expect(game.actions[game.actions.length-1].captures).to.exist.and.deep.equal([
+          { i: 4, j: 4 },
+          { i: 4, j: 5 },
+        ]);
+      });
     });
   });
 
