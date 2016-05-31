@@ -169,11 +169,10 @@ describe('Game Reducer', () => {
         const game = _.reduce(plays, goGameReducer, new GoGame());
 
         const lastAction = game.actions[game.actions.length-1];
-        expect(lastAction.captures).to.exist.and.have.lengthOf(2);
-        expect(lastAction.captures).to.deep.include(
+        expect(lastAction.captures).to.have.deep.members([
           { i: 4, j: 4 },
-          { i: 4, j: 5 }
-        );
+          { i: 4, j: 5 },
+        ]);
       });
     });
   });
