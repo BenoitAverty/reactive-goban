@@ -147,8 +147,28 @@ describe('Game Reducer', () => {
         expect(game.board[3][4]).to.deep.equal({ stone: null });
       });
 
-      it.skip('Should not capture the group in which it\'s played', () => {
-        expect.fail();
+      it('Should not capture the group in which it\'s played', () => {
+        const plays = [
+          actions.playMove(3, 4),
+          actions.playMove(4, 4),
+          actions.playMove(4, 3),
+          actions.pass(),
+          actions.playMove(3, 5),
+          actions.playMove(3, 6),
+          actions.playMove(4, 6),
+          actions.playMove(4, 7),
+          actions.playMove(5, 4),
+          actions.playMove(5, 6),
+          actions.playMove(5, 5),
+          actions.playMove(4, 5),
+        ];
+
+        const game = _.reduce(plays, goGameReducer, new GoGame());
+
+        expect(game.board[3][4].stone).to.equal('WHITE');
+        expect(game.board[3][4].stone).to.equal('WHITE');
+        const lastAction = game.actions[game.actions.length-1];
+        expect(lastAction.captures).to.have.lengthOf(1); // only capture 4,6
       });
 
       it('Should add a captures property to the last action', () => {

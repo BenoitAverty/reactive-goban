@@ -10,6 +10,7 @@ function playMoveReducer(game, action) {
   const j = action.j - 1;
 
   const turn = (game.moves.length % 2 === 0) ? 'BLACK' : 'WHITE';
+  const opponent = (game.moves.length % 2 === 0) ? 'WHITE' : 'BLACK';
 
   const validity = moveValidity({ i, j }, game.board);
   if (validity.valid) {
@@ -21,7 +22,7 @@ function playMoveReducer(game, action) {
     newBoard[i] = _.clone(game.board[i]);
     newBoard[i][j] = { ...game.board[i][j], stone: turn };
 
-    _(adjacentStones({ i, j }, newBoard))
+    _(adjacentStones({ i, j }, newBoard, opponent))
       .filter(coord => groupLiberties(coord, newBoard) === 0)
       .map(coord => stoneGroup(coord, newBoard))
       .flatten()
