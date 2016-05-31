@@ -28,6 +28,14 @@ function playMoveReducer(game, action) {
       .forEach(coord => {
         newBoard[coord.i] = _.clone(newBoard[coord.i]);
         newBoard[coord.i][coord.j] = { ...newBoard[coord.i][coord.j], stone: null };
+
+        const lastAction = newActions[newActions.length-1];
+        if (!lastAction.captures) {
+          lastAction.captures = [];
+        }
+
+        // actions.captures are exposed to the client so they are indexed from 1 to 19
+        lastAction.captures.push({ i: coord.i+1, j: coord.j+1 });
       });
 
     return {

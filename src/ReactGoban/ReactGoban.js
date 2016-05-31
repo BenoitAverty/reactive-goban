@@ -5,7 +5,7 @@ function constructJsxBoard(board, onIntersectionClick) {
   const jsxBoard = _.map(board, (row, rowIndex) => (
     <div className="reactive-goban-line" key={rowIndex}>{
         _.map(row, (intersection, columnIndex) => {
-          if (intersection.stone !== undefined) {
+          if (intersection.stone !== undefined && intersection.stone !== null) {
             return (
               <div
                 key={`${rowIndex}${columnIndex}`}

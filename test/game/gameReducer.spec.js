@@ -151,7 +151,7 @@ describe('Game Reducer', () => {
         expect.fail();
       });
 
-      it('Should add a capture property to the last action', () => {
+      it('Should add a captures property to the last action', () => {
         const plays = [
           actions.playMove(3, 4),
           actions.playMove(4, 4),
@@ -168,10 +168,12 @@ describe('Game Reducer', () => {
 
         const game = _.reduce(plays, goGameReducer, new GoGame());
 
-        expect(game.actions[game.actions.length-1].captures).to.exist.and.deep.equal([
+        const lastAction = game.actions[game.actions.length-1];
+        expect(lastAction.captures).to.exist.and.have.lengthOf(2);
+        expect(lastAction.captures).to.deep.include(
           { i: 4, j: 4 },
-          { i: 4, j: 5 },
-        ]);
+          { i: 4, j: 5 }
+        );
       });
     });
   });
