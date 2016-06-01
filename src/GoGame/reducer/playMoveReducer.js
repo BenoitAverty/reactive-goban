@@ -39,12 +39,20 @@ function playMoveReducer(game, action) {
         lastAction.captures.push({ i: coord.i+1, j: coord.j+1 });
       });
 
-    return {
-      ...game,
-      board: newBoard,
-      moves: newMoves,
-      actions: newActions,
-    };
+    if (groupLiberties({ i, j }, newBoard) === 0) {
+      return {
+        ...game,
+        actions: [...game.actions, { status: 'FAILURE', reason: 'SUICIDE', action }],
+      };
+    }
+    else {
+      return {
+        ...game,
+        board: newBoard,
+        moves: newMoves,
+        actions: newActions,
+      };
+    }
   }
   else {
     const newActions = _.concat(game.actions, {

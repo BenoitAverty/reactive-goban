@@ -109,6 +109,46 @@ describe('Game Reducer', () => {
       });
     });
 
+    describe('Playing a suicide move', () => {
+      it('Should return a last action with status failure', () => {
+        const plays = [
+          actions.playMove(3, 4),
+          actions.pass(),
+          actions.playMove(4, 3),
+          actions.pass(),
+          actions.playMove(4, 5),
+          actions.pass(),
+          actions.playMove(5, 4),
+          actions.playMove(4, 4),
+        ];
+
+        const game = _.reduce(plays, goGameReducer, new GoGame());
+        const lastAction = game.actions[game.actions.length - 1];
+
+        expect(lastAction.status).to.equal('FAILURE');
+        expect(lastAction.reason).to.equal('SUICIDE');
+      });
+
+      it('Should not modify the moves or the board', () => {
+        const plays = [
+          actions.playMove(3, 4),
+          actions.pass(),
+          actions.playMove(4, 3),
+          actions.pass(),
+          actions.playMove(4, 5),
+          actions.pass(),
+          actions.playMove(5, 4),
+        ];
+        const suicidePlay = actions.playMove(4, 4);
+
+        const game = _.reduce(plays, goGameReducer, new GoGame());
+        const newGame = goGameReducer(game, suicidePlay);
+
+        expect(newGame.moves).to.equal(game.moves);
+        expect(newGame.board).to.equal(game.board);
+      });
+    });
+
     describe('Capturing a stone', () => {
       it('Should remove the captured stone from the board', () => {
         const plays = [
@@ -167,8 +207,29 @@ describe('Game Reducer', () => {
 
         expect(game.board[3][4].stone).to.equal('WHITE');
         expect(game.board[3][4].stone).to.equal('WHITE');
+      });
+
+      it('Should allow playing a move that would be a suicide', () => {
+        const plays = [
+          actions.playMove(3, 4),
+          actions.playMove(4, 4),
+          actions.playMove(4, 3),
+          actions.pass(),
+          actions.playMove(3, 5),
+          actions.playMove(3, 6),
+          actions.playMove(4, 6),
+          actions.playMove(4, 7),
+          actions.playMove(5, 4),
+          actions.playMove(5, 6),
+          actions.playMove(5, 5),
+          actions.playMove(4, 5),
+        ];
+
+        const game = _.reduce(plays, goGameReducer, new GoGame());
+
         const lastAction = game.actions[game.actions.length-1];
         expect(lastAction.captures).to.have.lengthOf(1); // only capture 4,6
+        expect(lastAction.status).to.equal('SUCCESS');
       });
 
       it('Should add a captures property to the last action', () => {
