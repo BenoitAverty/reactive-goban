@@ -293,9 +293,20 @@ describe('Game Reducer', () => {
   describe('With the setMark() action', () => {
     it('Should not change the moves property', () => {
       const state = new GoGame();
-      const result = goGameReducer(state, actions.setMark());
+      const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }));
 
       expect(result.moves).to.equal(state.moves);
+    });
+
+    it('Should set the "mark" property on the corresponding intersection to "X" by default', () => {
+      const state = new GoGame();
+      const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }));
+
+      expect(result.board[2][2].mark).to.equal('X');
+    });
+
+    it.skip('Should not work if the mark to be set is not a string', () => {
+
     });
   });
 });

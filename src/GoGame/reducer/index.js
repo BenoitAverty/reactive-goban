@@ -2,6 +2,7 @@ import _ from 'lodash';
 import deepFreeze from 'deep-freeze';
 
 import playMoveReducer from './playMoveReducer';
+import setMarkReducer from './setMarkReducer';
 
 const initialGame = {
   board: _.map(Array(19), () => _.fill(Array(19), {})),
@@ -23,6 +24,12 @@ const goGameReducer = (game = initialGame, action) => {
       break;
     case 'PLAY_MOVE':
       resultGame = playMoveReducer(game, action);
+      break;
+    case 'SET_MARK':
+      resultGame = {
+        ...game,
+        board: setMarkReducer(game.board, action),
+      };
       break;
     default:
       resultGame = game;

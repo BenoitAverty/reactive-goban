@@ -11,8 +11,16 @@ const pass = () => ({
   type: 'PASS',
 });
 
+const setMark = ({ i, j }, mark = 'X') => ({
+  type: 'SET_MARK',
+  i,
+  j,
+  mark,
+});
+
 export default {
   init,
   playMove,
   pass,
+  setMark,
 };
