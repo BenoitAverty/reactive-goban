@@ -308,5 +308,9 @@ describe('Game Reducer', () => {
     it.skip('Should not work if the mark to be set is not a string', () => {
 
     });
+
+    it.skip('Should set the mark to the second parameter of the action', () => {
+
+    });
   });
 });
