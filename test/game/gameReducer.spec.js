@@ -289,4 +289,13 @@ describe('Game Reducer', () => {
       expect(newGame.actions[0].action).to.equal(action);
     });
   });
+
+  describe('With the setMark() action', () => {
+    it('Should not change the moves property', () => {
+      const state = new GoGame();
+      const result = goGameReducer(state, actions.setMark());
+
+      expect(result.moves).to.equal(state.moves);
+    });
+  });
 });
