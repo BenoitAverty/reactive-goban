@@ -6,6 +6,7 @@
     "default-case": "off",
     "no-else-return": "off",
     "brace-style": ["error", "stroustrup"],
+    "quote-props": ["error", "consistent-as-needed"],
   },
   "parserOptions": {
     "ecmaFeatures": {
