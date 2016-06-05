@@ -1,15 +1,25 @@
 import Cycle from '@cycle/core';
+import { makeDOMDriver } from '@cycle/dom';
 
-import { CycleGoban, actions } from '../src';
+import { goGameReducer, actions, CycleGoban, gobanClicks } from '../src';
 
-const main = ({ Goban }) => {
-  const actions$ = Goban.clicks.map(click => actions.playMove(click.i, click.j));
+const main = ({ DOM }) => {
+  const gobanClicks$ = gobanClicks(DOM);
 
-  return { Goban: actions$ };
+  const games$ = gobanClicks$
+    .map(({ i, j }) => actions.playMove(i, j))
+    .startWith(actions.init())
+    .scan(goGameReducer, undefined);
+
+  const trees$ = CycleGoban(games$);
+
+  return {
+    DOM: trees$,
+  };
 };
 
 const drivers = {
-  Goban: CycleGoban.makeCycleGobanDriver('#app'),
+  DOM: makeDOMDriver('#app'),
 };
 
 Cycle.run(main, drivers);

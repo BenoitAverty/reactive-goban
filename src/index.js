@@ -4,4 +4,4 @@ export { default as actions } from './GoGame/actions';
 
 export { default as ReactGoban } from './ReactGoban/ReactGoban';
 
-export { default as CycleGoban } from './CycleGoban/CycleGoban';
+export { CycleGoban, gobanClicks } from './CycleGoban/CycleGoban';
