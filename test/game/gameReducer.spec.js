@@ -301,11 +301,11 @@ describe('Game Reducer', () => {
       expect(result.moves).to.equal(state.moves);
     });
 
-    it('Should set the "mark" property on the corresponding intersection to "X" by default', () => {
+    it('Should set the "mark" property on the corresponding intersection to "cross" by default', () => {
       const state = new GoGame();
       const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }));
 
-      expect(result.board[2][2].mark).to.equal('X');
+      expect(result.board[2][2].mark).to.equal('cross');
     });
 
     it('Should not change the board if the mark to be set is not a string', () => {

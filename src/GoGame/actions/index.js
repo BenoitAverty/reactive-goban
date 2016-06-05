@@ -11,7 +11,7 @@ const pass = () => ({
   type: 'PASS',
 });
 
-const setMark = ({ i, j }, mark = 'X') => ({
+const setMark = ({ i, j }, mark = 'cross') => ({
   type: 'SET_MARK',
   i,
   j,
