@@ -26,3 +26,11 @@
 .reactive-goban-stone-white:before {
   content: 'W';
 }
+
+.reactive-goban-mark-cross:before {
+  content: 'X';
+}
+
+.reactive-goban-mark-char {
+  text-decoration: underline;
+}

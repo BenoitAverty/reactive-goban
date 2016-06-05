@@ -1,14 +1,24 @@
 import React from 'react';
 import _ from 'lodash';
 
+function jsxMark(mark) {
+  if (mark.length === 1) {
+    return <span className="reactive-goban-mark-char">{mark}</span>;
+  }
+  else {
+    return <span className={`reactive-goban-mark-${mark}`} />;
+  }
+}
+
 function jsxIntersection(intersection) {
   const hasStone = i => i.stone !== undefined && i.stone !== null;
   const hasMark = i => i.mark !== undefined && i.mark !== null;
 
+
   if (hasStone(intersection) && hasMark(intersection)) {
     return (
       <span className={`reactive-goban-stone-${intersection.stone.toLowerCase()}`}>
-        <span className={`reactive-goban-mark-${intersection.mark.toLowerCase()}`} />
+        {jsxMark(intersection.mark)}
       </span>
     );
   }
@@ -16,7 +26,7 @@ function jsxIntersection(intersection) {
     return <span className={`reactive-goban-stone-${intersection.stone.toLowerCase()}`} />;
   }
   else if (hasMark(intersection)) {
-    return <span className={`reactive-goban-mark-${intersection.mark.toLowerCase()}`} />;
+    return jsxMark(intersection.mark);
   }
   else {
     return <span />;

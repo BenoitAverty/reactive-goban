@@ -7,8 +7,8 @@ let game = new GoGame();
 game = goGameReducer(game, actions.playMove(3, 3));
 game = goGameReducer(game, actions.playMove(16, 16));
 game = goGameReducer(game, actions.playMove(19, 19));
-game = goGameReducer(game, actions.setMark({ i: 3, j: 3 }, 'X'));
-game = goGameReducer(game, actions.setMark({ i: 10, j: 10 }, 'test'));
+game = goGameReducer(game, actions.setMark({ i: 3, j: 3 }, 'cross'));
+game = goGameReducer(game, actions.setMark({ i: 10, j: 10 }, 'A'));
 
 function handleClick(i, j) {
   game = goGameReducer(game, actions.playMove(i, j));
