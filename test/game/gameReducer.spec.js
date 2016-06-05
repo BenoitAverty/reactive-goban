@@ -41,6 +41,9 @@ describe('Game Reducer', () => {
 
         newGame = goGameReducer(newGame, actions.playMove(16, 16));
         expect(newGame.board[15][15]).to.exist.and.deep.equal(expectedWhiteStone);
+
+        newGame = goGameReducer(newGame, actions.playMove(19, 19));
+        expect(newGame.board[18][18]).to.exist.and.deep.equal(expectedBlackStone);
       });
 
       it('Should save the action with a status of "SUCCESS"', () => {

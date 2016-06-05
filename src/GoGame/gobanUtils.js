@@ -19,7 +19,7 @@ export function moveValidity({ i, j }, board) {
 // be returned. Pass null explicitely to return only empty intersections.
 // Does not return the indices of empty intersections.
 export function adjacentStones({ i, j }, board, onlyColor) {
-  const intersectionIsInGoban = coord => coord.i > 0 && coord.j > 0 && coord.i < 18 && coord.j < 18;
+  const intersectionIsInGoban = coord => coord.i >= 0 && coord.j >= 0 && coord.i < 19 && coord.j < 19;
   const intersectionIsEmpty = coord =>
     board[coord.i][coord.j].stone === undefined ||
     board[coord.i][coord.j].stone === null;
