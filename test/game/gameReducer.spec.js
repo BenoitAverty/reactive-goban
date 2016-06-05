@@ -305,12 +305,61 @@ describe('Game Reducer', () => {
       expect(result.board[2][2].mark).to.equal('X');
     });
 
-    it.skip('Should not work if the mark to be set is not a string', () => {
+    it('Should not change the board if the mark to be set is not a string', () => {
+      const state = new GoGame();
+      const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, {}));
 
+      expect(result.board).to.equal(state.board);
     });
 
-    it.skip('Should set the mark to the second parameter of the action', () => {
+    it('Should remove special characters to the mark and trim it', () => {
+      const state = new GoGame();
+      const marksTests = {
+        'holà': 'hola',
+        'a+b': 'ab',
+        '$test': 'test',
+        'tête': 'tete',
+        'foo bar': 'foo-bar',
+        ' hey! ': 'hey',
+      };
 
+      _.forIn(marksTests, (expected, mark) => {
+        const actual = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, mark));
+
+        expect(actual.board[2][2].mark).to.equal(expected);
+      });
+    });
+
+    it('Should not change the board with an empty mark', () => {
+      const state = new GoGame();
+      const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, ' '));
+
+      expect(result.board).to.equal(state.board);
+    });
+
+    it('Should set the mark in lower case if it includes several characters', () => {
+      const state = new GoGame();
+      const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, 'UPPERCASE'));
+
+      expect(result.board[2][2].mark).to.equal('uppercase');
+    });
+
+    it('Should not change the mark if it\'s a single character', () => {
+      const state = new GoGame();
+      const marks = ['$', 'X', '+', 'é'];
+
+      _.forEach(marks, (mark) => {
+        const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, mark));
+
+        expect(result.board[2][2].mark).to.equal(mark);
+      });
+    });
+
+    it('Should set the mark to the second parameter of the action', () => {
+      const state = new GoGame();
+      const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, 'hola'));
+
+      expect(result.board[2][2].mark).to.equal('hola');
     });
   });
 });
