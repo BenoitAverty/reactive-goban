@@ -1,22 +1,44 @@
 import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 
+function hScriptMark(mark) {
+  if (mark.length === 1) {
+    return span('.reactive-goban-mark-char', mark);
+  }
+  else {
+    return span(`.reactive-goban-mark-${mark}`);
+  }
+}
+
+function hScriptIntersection(intersection) {
+  const hasStone = i => i.stone !== undefined && i.stone !== null;
+  const hasMark = i => i.mark !== undefined && i.mark !== null;
+
+  if (hasStone(intersection) && hasMark(intersection)) {
+    return span(`.reactive-goban-stone-${intersection.stone.toLowerCase()}`,
+            hScriptMark(intersection.mark))
+    ;
+  }
+  else if (hasStone(intersection)) {
+    return span(`.reactive-goban-stone-${intersection.stone.toLowerCase()}`);
+  }
+  else if (hasMark(intersection)) {
+    return hScriptMark(intersection.mark);
+  }
+  else {
+    return span();
+  }
+}
+
 export function CycleGoban({ games$ }) {
   const trees$ = games$.map(game =>
     div('.reactive-goban', _.map(game.board, (row, rowIndex) =>
-      div('.reactive-goban-line', _.map(row, (intersection, columnIndex) => {
-        if (intersection.stone !== undefined && intersection.stone !== null) {
-          return div('.reactive-goban-intersection', {
-            'data-row': rowIndex, 'data-column': columnIndex,
-          },
-          span(`.reactive-goban-stone-${intersection.stone.toLowerCase()}`));
-        }
-        else {
-          return div('.reactive-goban-intersection', {
-            'data-row': rowIndex, 'data-column': columnIndex,
-          });
-        }
-      }))
+      div('.reactive-goban-line', _.map(row, (intersection, columnIndex) =>
+        div('.reactive-goban-intersection', {
+          'data-row': rowIndex, 'data-column': columnIndex,
+        },
+        hScriptIntersection(intersection))
+      ))
     ))
   );
 

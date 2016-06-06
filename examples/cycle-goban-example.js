@@ -3,11 +3,15 @@ import { makeDOMDriver, div, input } from '@cycle/dom';
 
 import { goGameReducer, actions, CycleGoban, gobanClicks } from '../src';
 
-const main = ({ DOM: DOMSources }) => {
-  const gobanClicks$ = gobanClicks(DOMSources);
+const main = ({ DOM: DOMSource }) => {
+  const gobanClicks$ = gobanClicks(DOMSource);
+  const checkboxState$ = DOMSource.select('#set-mark').events('click')
+    .map(e => e.currentTarget.checked)
+    .startWith(false);
 
   const games$ = gobanClicks$
-    .map(({ i, j }) => actions.playMove(i, j))
+    .withLatestFrom(checkboxState$, ({ i, j }, isChecked) =>
+      (isChecked ? actions.setMark({ i, j }) : actions.playMove(i, j)))
     .startWith(actions.init())
     .scan(goGameReducer, undefined);
 
@@ -17,7 +21,7 @@ const main = ({ DOM: DOMSources }) => {
     div([
       t,
       div([
-        input({ type: 'checkbox', value: 'Set marks' }),
+        input({ type: 'checkbox', value: 'Set marks', id: 'set-mark' }),
       ]),
     ])
   );
