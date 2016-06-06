@@ -1,7 +1,7 @@
 import { div, span } from '@cycle/dom';
 import _ from 'lodash';
 
-export function CycleGoban(games$) {
+export function CycleGoban({ games$ }) {
   const trees$ = games$.map(game =>
     div('.reactive-goban', _.map(game.board, (row, rowIndex) =>
       div('.reactive-goban-line', _.map(row, (intersection, columnIndex) => {
@@ -20,11 +20,11 @@ export function CycleGoban(games$) {
     ))
   );
 
-  return trees$;
+  return { DOM: trees$ };
 }
 
-export function gobanClicks(DOMDriver) {
-  return DOMDriver.select('.reactive-goban-intersection').events('click').map(event => ({
+export function gobanClicks(DOMSources) {
+  return DOMSources.select('.reactive-goban-intersection').events('click').map(event => ({
     i: event.currentTarget['data-row']+1,
     j: event.currentTarget['data-column']+1,
     event,

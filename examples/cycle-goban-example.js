@@ -1,17 +1,26 @@
 import Cycle from '@cycle/core';
-import { makeDOMDriver } from '@cycle/dom';
+import { makeDOMDriver, div, input } from '@cycle/dom';
 
 import { goGameReducer, actions, CycleGoban, gobanClicks } from '../src';
 
-const main = ({ DOM }) => {
-  const gobanClicks$ = gobanClicks(DOM);
+const main = ({ DOM: DOMSources }) => {
+  const gobanClicks$ = gobanClicks(DOMSources);
 
   const games$ = gobanClicks$
     .map(({ i, j }) => actions.playMove(i, j))
     .startWith(actions.init())
     .scan(goGameReducer, undefined);
 
-  const trees$ = CycleGoban(games$);
+  const cycleGoban = CycleGoban({ games$ });
+
+  const trees$ = cycleGoban.DOM.map(t =>
+    div([
+      t,
+      div([
+        input({ type: 'checkbox', value: 'Set marks' }),
+      ]),
+    ])
+  );
 
   return {
     DOM: trees$,
