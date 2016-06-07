@@ -301,7 +301,7 @@ describe('Game Reducer', () => {
       expect(result.moves).to.equal(state.moves);
     });
 
-    it('Should set the "mark" property on the corresponding intersection to "cross" by default', () => {
+    it('Should set the "mark" property on the intersection to "cross" by default', () => {
       const state = new GoGame();
       const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }));
 
@@ -333,11 +333,11 @@ describe('Game Reducer', () => {
       });
     });
 
-    it('Should not change the board with an empty mark', () => {
+    it('Should set the default mark (cross) if the marklabel is empty', () => {
       const state = new GoGame();
       const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, ' '));
 
-      expect(result.board).to.equal(state.board);
+      expect(result.board[2][2].mark).to.equal('cross');
     });
 
     it('Should set the mark in lower case if it includes several characters', () => {

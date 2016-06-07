@@ -10,11 +10,11 @@ function setMarkReducer(board, action) {
   const i = action.i - 1;
   const j = action.j - 1;
 
-  if (typeof action.mark !== 'string' || action.mark.trim() === '') {
+  if (typeof action.mark !== 'string') {
     return board;
   }
 
-  const mark = action.mark.trim();
+  const mark = action.mark.trim() || 'cross';
 
   const newBoard = _.clone(board);
   newBoard[i] = _.clone(board[i]);
