@@ -1,8 +1,29 @@
 import { Observable } from 'rx';
 import Cycle from '@cycle/core';
-import { makeDOMDriver, div, input } from '@cycle/dom';
+import { makeDOMDriver, div, span, input, button } from '@cycle/dom';
 
 import { goGameReducer, actions, CycleGoban, gobanClicks } from '../src';
+
+/**
+ * Offset component. Sets the offset for the game history
+ */
+const OffsetSelector = ({ DOM }) => {
+  const vtree$ = Observable.of(
+    span([
+      button('#prev-position', '<'),
+      button('#next-position', '>'),
+    ])
+  );
+
+  const prevClick$ = DOM.select('#prev-position').events('click').map(1);
+  const nextClick$ = DOM.select('#prev-position').events('click').map(-1);
+  const offset$ = prevClick$.merge(nextClick$).scan((acc, v) => acc + v, 0).startWith(0).do(o => console.log(o));
+
+  return {
+    DOM: vtree$,
+    offset$,
+  };
+};
 
 /**
  * Mark selector component. A checkbox to choose if we want to set marks, and an input to choose
@@ -10,7 +31,7 @@ import { goGameReducer, actions, CycleGoban, gobanClicks } from '../src';
  */
 const MarkSelector = ({ DOM }) => {
   const vtree$ = Observable.of(
-    div([
+    span([
       input('#set-mark-toggle', { type: 'checkbox', value: 'Set marks' }),
       input('#mark-input', { type: 'text' }),
     ])
@@ -45,18 +66,28 @@ const main = ({ DOM }) => {
   const gobanClicks$ = gobanClicks(DOM);
 
   const markSelector = MarkSelector({ DOM });
+  const offsetSelector = OffsetSelector({ DOM });
 
-  const games$ = gobanClicks$
+  const goGameActions$ = gobanClicks$
     .withLatestFrom(markSelector.chosenMark$, ({ i, j }, { isChecked, label }) =>
       (isChecked ? actions.setMark({ i, j }, label) : actions.playMove(i, j)))
-    .startWith(actions.init())
-    .scan(goGameReducer, undefined);
+    .startWith(actions.init());
+
+  const games$ = goGameActions$
+    .scan(goGameReducer, undefined)
+    .scan((acc, a) => acc.concat(Observable.just(a)), Observable.empty())
+    .combineLatest(offsetSelector.offset$, (obs, offset) => obs.skipLast(offset).last())
+    .switch()
+    .do(g => console.log(g));
 
   const cycleGoban = CycleGoban({ games$ });
 
-  const trees$ = Observable.combineLatest(cycleGoban.DOM, markSelector.DOM,
-    (gobanVtree, markSelectorVtree) => div([gobanVtree, markSelectorVtree])
-  );
+  const trees$ = Observable.combineLatest(cycleGoban.DOM, markSelector.DOM, offsetSelector.DOM,
+    (gobanVtree, markSelectorVtree, offsetSelectorVtree) =>
+      div([gobanVtree,
+        div([markSelectorVtree, offsetSelectorVtree]),
+      ])
+    );
 
   return {
     DOM: trees$,
