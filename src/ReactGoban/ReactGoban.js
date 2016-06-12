@@ -1,5 +1,4 @@
 import React from 'react';
-import _ from 'lodash';
 
 function jsxMark(mark) {
   if (mark.length === 1) {
@@ -34,9 +33,9 @@ function jsxIntersection(intersection) {
 }
 
 function jsxBoard(board, onIntersectionClick) {
-  const jsx = _.map(board, (row, rowIndex) => (
+  const jsx = board.map((row, rowIndex) => (
     <div className="reactive-goban-line" key={rowIndex}>{
-        _.map(row, (intersection, columnIndex) =>
+        row.map((intersection, columnIndex) =>
           <div
             key={`${rowIndex}${columnIndex}`}
             className="reactive-goban-intersection"

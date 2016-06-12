@@ -1,5 +1,4 @@
 import { div, span } from '@cycle/dom';
-import _ from 'lodash';
 
 function hScriptMark(mark) {
   if (mark.length === 1) {
@@ -32,8 +31,8 @@ function hScriptIntersection(intersection) {
 
 export function CycleGoban({ games$ }) {
   const trees$ = games$.map(game =>
-    div('.reactive-goban', _.map(game.board, (row, rowIndex) =>
-      div('.reactive-goban-line', _.map(row, (intersection, columnIndex) =>
+    div('.reactive-goban', game.board.map((row, rowIndex) =>
+      div('.reactive-goban-line', row.map((intersection, columnIndex) =>
         div('.reactive-goban-intersection', {
           'data-row': rowIndex, 'data-column': columnIndex,
         },

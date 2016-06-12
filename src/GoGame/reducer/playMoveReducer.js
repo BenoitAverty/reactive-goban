@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 import { moveValidity, adjacentStones, groupLiberties, stoneGroup } from '../gobanUtils';
 
 // Return a new game after applying the given action, which is assumed to be a playMove() action.
@@ -14,20 +12,20 @@ function playMoveReducer(game, action) {
 
   const validity = moveValidity({ i, j }, game.board);
   if (validity.valid) {
-    const newMoves = _.concat(game.moves, { i: action.i, j: action.j });
+    const newMoves = game.moves.concat({ i: action.i, j: action.j });
 
-    const newActions = _.concat(game.actions, { status: 'SUCCESS', action });
+    const newActions = game.actions.concat({ status: 'SUCCESS', action });
 
-    const newBoard = _.clone(game.board);
-    newBoard[i] = _.clone(game.board[i]);
+    const newBoard = [...game.board];
+    newBoard[i] = [...game.board[i]];
     newBoard[i][j] = { ...game.board[i][j], stone: turn };
 
-    _(adjacentStones({ i, j }, newBoard, opponent))
+    adjacentStones({ i, j }, newBoard, opponent)
       .filter(coord => groupLiberties(coord, newBoard) === 0)
       .map(coord => stoneGroup(coord, newBoard))
-      .flatten()
+      .reduce((acc, el) => acc.concat(...el), [])
       .forEach(coord => {
-        newBoard[coord.i] = _.clone(newBoard[coord.i]);
+        newBoard[coord.i] = [...newBoard[coord.i]];
         newBoard[coord.i][coord.j] = { ...newBoard[coord.i][coord.j], stone: null };
 
         const lastAction = newActions[newActions.length-1];
@@ -55,7 +53,7 @@ function playMoveReducer(game, action) {
     }
   }
   else {
-    const newActions = _.concat(game.actions, {
+    const newActions = game.actions.concat({
       status: 'FAILURE',
       reason: validity.reason,
       action,

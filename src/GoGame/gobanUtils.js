@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import _uniqWith from 'lodash/uniqWith';
+import _isEqual from 'lodash/isEqual';
 
 // Returns true if playing on the given coordinates (between 0 and 18) is a valid move.
 export function moveValidity({ i, j }, board) {
@@ -61,12 +62,12 @@ export function stoneGroup({ i, j }, board) {
 
   while (group1.length !== group2.length) {
     if (group1.length < group2.length) {
-      _.forEach(group2, addToGroup1);
-      group1 = _.uniqWith(group1, _.isEqual);
+      group2.forEach(addToGroup1);
+      group1 = _uniqWith(group1, _isEqual);
     }
     else {
-      _.forEach(group1, addToGroup2);
-      group2 = _.uniqWith(group2, _.isEqual);
+      group1.forEach(addToGroup2);
+      group2 = _uniqWith(group2, _isEqual);
     }
   }
 
@@ -77,9 +78,9 @@ export function stoneGroup({ i, j }, board) {
 export function groupLiberties({ i, j }, board) {
   const group = stoneGroup({ i, j }, board);
   const liberties = [];
-  _.forEach(group, (s) => {
+  group.forEach((s) => {
     liberties.push(...adjacentStones({ i: s.i, j: s.j }, board, null));
   });
 
-  return _.uniqWith(liberties, _.isEqual).length;
+  return _uniqWith(liberties, _isEqual).length;
 }

@@ -52,7 +52,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
-  "@cycle/dom": "^9.4.0",
+    "@cycle/dom": "^9.4.0",
     "react": "^15.1.0",
     "lodash": "^4.13.1",
     "react-dom": "^15.1.0",

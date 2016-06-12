@@ -8,7 +8,7 @@ describe('GoGame', () => {
   describe('default / empty GoGame object', () => {
     it('Should contain a 19x19 array of empty objects', () => {
       const game = new GoGame();
-      const expected = _.map(Array(19), () => _.fill(Array(19), {}));
+      const expected = _.map(Array(19), () => _.map(Array(19), {}));
 
       expect(game.board).to.deep.equal(expected);
     });

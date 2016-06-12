@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import slug from 'slug';
 
 delete slug.charmap.$;
@@ -16,8 +15,8 @@ function setMarkReducer(board, action) {
 
   const mark = action.mark.trim() || 'cross';
 
-  const newBoard = _.clone(board);
-  newBoard[i] = _.clone(board[i]);
+  const newBoard = [...board];
+  newBoard[i] = [...board[i]];
 
   if (mark.length === 1) {
     newBoard[i][j] = { ...board[i][j], mark };
