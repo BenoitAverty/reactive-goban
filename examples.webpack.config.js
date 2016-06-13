@@ -1,4 +1,4 @@
-const path = require('path');
+const { join } = require('path');
 
 module.exports = {
   entry: {
@@ -6,7 +6,7 @@ module.exports = {
     'cycle-goban-example': './examples/cycle-goban-example.js',
   },
   output: {
-    path: path.resolve(__dirname, 'examples'),
+    path: join(__dirname, 'examples'),
     filename: '[name].dist.js',
   },
   module: {
