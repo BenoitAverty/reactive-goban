@@ -1,8 +1,8 @@
 {
   "name": "reactive-goban",
-  "version": "0.1.1",
+  "version": "0.0.0-semantic-release",
   "description": "A Javascript representation of a Go game and a React component able to render it",
-  "main": "./dist/index.js",
+  "main": "./lib/index.js",
   "directories": {
     "test": "test"
   },
@@ -16,11 +16,12 @@
     "build:umd": "webpack --config umd-build.webpack.config.js --output-filename reactive-goban.js",
     "build:umd.min": "webpack -p --config umd-build.webpack.config.js --output-filename reactive-goban.min.js",
     "prepublish": "in-install || npm run build",
-    "clean": "rimraf dist lib"
+    "clean": "rimraf dist lib",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BenoitAverty/reactive-goban.git"
+    "url": "https://github.com/BenoitAverty/reactive-goban.git"
   },
   "keywords": [
     "Go",
@@ -58,7 +59,8 @@
     "npm-run-all": "^2.1.2",
     "rimraf": "^2.5.2",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "semantic-release": "^4.3.5"
   },
   "dependencies": {
     "@cycle/dom": "^9.4.0",
