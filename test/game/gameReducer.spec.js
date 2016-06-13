@@ -324,6 +324,7 @@ describe('Game Reducer', () => {
         'tête': 'tete',
         'foo bar': 'foo-bar',
         ' hey! ': 'hey',
+        'test+123': 'test123',
       };
 
       _.forIn(marksTests, (expected, mark) => {
