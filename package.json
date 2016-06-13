@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha --recursive --compilers js:babel-core/register",
-    "test-debug": "mocha --recursive --compilers js:babel-core/register --debug-brk",
+    "test:debug": "mocha --recursive --compilers js:babel-core/register --debug-brk",
     "examples": "webpack-dev-server --config examples.webpack.config.js --content-base examples/ --inline",
     "prebuild": "npm run clean",
     "build": "npm-run-all --parallel build:*",
