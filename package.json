@@ -41,6 +41,8 @@
     "babel-preset-react": "^6.5.0",
     "chai": "^3.5.0",
     "chai-enzyme": "^0.4.2",
+    "commitizen": "^2.8.2",
+    "cz-conventional-changelog": "^1.1.6",
     "enzyme": "^2.3.0",
     "eslint": "^2.10.2",
     "eslint-config-airbnb": "^9.0.1",
@@ -59,5 +61,10 @@
     "rx": "^4.1.0",
     "slug": "^0.9.1",
     "deep-freeze": "0.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
