@@ -15,7 +15,7 @@
     "build:lib": "babel src --out-dir lib",
     "build:umd": "webpack --config umd-build.webpack.config.js --output-filename reactive-goban.js",
     "build:umd.min": "webpack -p --config umd-build.webpack.config.js --output-filename reactive-goban.min.js",
-    "prepublish": "npm run build",
+    "prepublish": "in-install || npm run build",
     "clean": "rimraf dist lib"
   },
   "repository": {
@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@cycle/dom": "^9.4.0",
+    "in-publish": "^2.0.0",
     "deep-freeze": "0.0.1",
     "diacritics": "^1.2.3",
     "lodash": "^4.13.1",
