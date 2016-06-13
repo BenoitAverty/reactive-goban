@@ -1,6 +1,14 @@
-import slug from 'slug';
 
-delete slug.charmap.$;
+import { remove as removeDiacritics } from 'diacritics';
+
+function sanitize(s) {
+  const sanitizedString = removeDiacritics(s)
+    .replace(/[^\w\s]/gi, '')
+    .replace(' ', '-')
+    .toLowerCase();
+
+  return sanitizedString;
+}
 
 // Return a new board after applying the given action, which is assumed to be a setMark() action.
 // Coordinates in the action are 1 indexed (from 1 to 19, as in real life).
@@ -22,7 +30,7 @@ function setMarkReducer(board, action) {
     newBoard[i][j] = { ...board[i][j], mark };
   }
   else {
-    newBoard[i][j] = { ...board[i][j], mark: slug(mark).toLowerCase() };
+    newBoard[i][j] = { ...board[i][j], mark: sanitize(mark) };
   }
 
   return newBoard;

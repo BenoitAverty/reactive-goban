@@ -62,12 +62,12 @@
   },
   "dependencies": {
     "@cycle/dom": "^9.4.0",
-    "react": "^15.1.0",
+    "deep-freeze": "0.0.1",
+    "diacritics": "^1.2.3",
     "lodash": "^4.13.1",
+    "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "rx": "^4.1.0",
-    "slug": "^0.9.1",
-    "deep-freeze": "0.0.1"
+    "rx": "^4.1.0"
   },
   "config": {
     "commitizen": {
