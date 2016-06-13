@@ -3,7 +3,7 @@ import { remove as removeDiacritics } from 'diacritics';
 
 function sanitize(s) {
   const sanitizedString = removeDiacritics(s)
-    .replace(/[^\w\s]/gi, '')
+    .replace(/[^\w\s-]/gi, '')
     .replace(' ', '-')
     .toLowerCase();
 

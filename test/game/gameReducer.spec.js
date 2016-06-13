@@ -334,6 +334,15 @@ describe('Game Reducer', () => {
       });
     });
 
+    it('Should not remove hyphens', () => {
+      const state = new GoGame();
+      const mark = 'foo-bar';
+      const expected = 'foo-bar';
+      const actual = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, mark));
+
+      expect(actual.board[2][2].mark).to.equal(expected);
+    });
+
     it('Should set the default mark (cross) if the marklabel is empty', () => {
       const state = new GoGame();
       const result = goGameReducer(state, actions.setMark({ i: 3, j: 3 }, ' '));
