@@ -16,23 +16,20 @@ export function moveValidity({ i, j }, board) {
 
 // Return the coordinates of the stones adjacent to the given indices.
 // indices are assumed to be between 0 and 18 (real indices of the board array).
-// Optional parameter 'onlyColor' is used to specify if only the stones of the given color are to
-// be returned. Pass null explicitely to return only empty intersections.
-// Does not return the indices of empty intersections.
-export function adjacentStones({ i, j }, board, onlyColor) {
+// parameter 'color' is used to specify the color of the stones to be returned.
+// Pass null explicitely to return only empty intersections.
+// Does not return the indices of empty intersections unless the color parameter is set to null.
+export function adjacentStones({ i, j }, board, color) {
   const coordIsInGoban = coord => coord.i >= 0 && coord.j >= 0 && coord.i < 19 && coord.j < 19;
   const intersectionIsEmpty = coord =>
     board[coord.i][coord.j].stone === undefined ||
     board[coord.i][coord.j].stone === null;
   const intersectionIsNotEmpty = coord => !intersectionIsEmpty(coord);
-  const stoneHasRightColor = coord => onlyColor === board[coord.i][coord.j].stone;
+  const stoneHasRightColor = coord => color === board[coord.i][coord.j].stone;
 
   const neighbours = [{ i, j: j-1 }, { i: i-1, j }, { i: i+1, j }, { i, j: j+1 }]
     .filter(coordIsInGoban);
-  if (onlyColor === undefined) {
-    return neighbours.filter(intersectionIsNotEmpty);
-  }
-  else if (onlyColor === null) {
+  if (color === null) {
     return neighbours.filter(intersectionIsEmpty);
   }
   else {

@@ -7,7 +7,6 @@ function GoGame(game) {
   Object.assign(this, goGameReducer(game, actions.init()));
 }
 
-
 GoGame.prototype = {
   get ko() {
     return this.koCoordinates !== undefined && this.koCoordinates !== null;
@@ -16,7 +15,7 @@ GoGame.prototype = {
     return this.actions[this.actions.length-1] || null;
   },
   get turn() {
-    return this.moves.length % 2 === 0 ? 'BLACK' : 'WHITE';
+    return 'BLACK';
   },
 };
 
