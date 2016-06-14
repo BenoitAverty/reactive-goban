@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "nyc --reporter=lcov --require babel-core/register mocha --recursive",
+    "test": "npm run clean:coverage && npm run test:run && npm run test:check-coverage",
+    "test:run": "nyc --reporter=lcov --require babel-core/register mocha --recursive",
     "test:debug": "mocha --recursive --compilers js:babel-core/register --debug-brk",
     "test:check-coverage": "nyc check-coverage --statements 90 --branches 90 --functions 90 --lines 90",
     "test:report-coverage": "cat ./coverage/lcov.info | codecov",
