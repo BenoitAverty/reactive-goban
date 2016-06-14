@@ -7,13 +7,12 @@ notifications:
   email: false
 node_js:
   - '6'
-  - '5'
-  - '4'
 before_script:
   - npm prune
 script:
   - npm run test
 after_success:
+  # No need to build as it is done in the prepublish script
   - npm run semantic-release
 branches:
   only:
