@@ -1,13 +1,13 @@
 {
   "extends": "airbnb",
   "rules": {
-    "no-unused-expressions": "off",
-    "space-infix-ops": "off",
-    "default-case": "off",
-    "no-else-return": "off",
-    "brace-style": ["error", "stroustrup"],
-    "quote-props": ["error", "consistent-as-needed"],
-    "new-cap": "off",
+    "no-unused-expressions": 0,
+    "space-infix-ops": 0,
+    "default-case": 0,
+    "no-else-return": 0,
+    "brace-style": [2, "stroustrup"],
+    "quote-props": [2, "consistent-as-needed"],
+    "new-cap": 0,
   },
   "parserOptions": {
     "ecmaFeatures": {
