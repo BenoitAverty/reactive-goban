@@ -17,6 +17,9 @@ GoGame.prototype = {
   get turn() {
     return 'BLACK';
   },
+  playMove({ i, j }) {
+    return goGameReducer(this, actions.playMove(i, j));
+  },
 };
 
 export default GoGame;

@@ -1,8 +1,11 @@
 /* eslint-env mocha */
 import _ from 'lodash';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+chai.use(sinonChai);
 
-import { GoGame } from '../../src';
+import { GoGame, actions } from '../../src';
 
 describe('GoGame', () => {
   describe('default / empty GoGame object', () => {
@@ -47,6 +50,21 @@ describe('GoGame', () => {
       const game = new GoGame();
 
       expect(game.turn).to.equal('BLACK');
+    });
+  });
+
+  /* eslint-disable no-underscore-dangle */
+  describe('playMove method', () => {
+    it('Should call the reducer with the playMove action and return the result', () => {
+      const resultGame = {};
+      const reducerStub = sinon.stub().returns(resultGame);
+      GoGame.__Rewire__('goGameReducer', reducerStub);
+      const game = new GoGame();
+
+      const actual = game.playMove({ i: 3, j: 3 });
+
+      expect(reducerStub).to.have.been.calledWith(game, actions.playMove(3, 3));
+      expect(actual).to.equal(resultGame);
     });
   });
 });
