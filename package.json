@@ -94,8 +94,8 @@
     }
   },
   "nyc": {
-    "include": [
-      "/"
-    ]
+    "instrument": false,
+    "sourceMap": false,
+    "include":["src/GoGame"]
   }
 }
