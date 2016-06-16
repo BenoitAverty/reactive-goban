@@ -7,9 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "npm run clean:coverage && npm run test:run && npm run test:check-coverage",
-    "test:run": "cross-env BABEL_ENV=test nyc --reporter=lcov --reporter=clover mocha --compilers js:babel-core/register --recursive",
-    "test:debug": "mocha --recursive --compilers js:babel-core/register --debug-brk",
+    "test": "cross-env BABEL_ENV=test mocha --compilers js:babel-core/register --recursive",
+    "test:with-coverage": "npm run clean:coverage && cross-env BABEL_ENV=test nyc --reporter=lcov mocha --compilers js:babel-core/register --recursive",
     "test:check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "test:publish-coverage": "cat ./coverage/lcov.info | codecov",
     "prebuild": "npm run clean",
