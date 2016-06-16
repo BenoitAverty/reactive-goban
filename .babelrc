@@ -4,7 +4,7 @@
   "env": {
     "test": {
       "plugins": [
-        ["__coverage__", { "only": "src/GoGame" }],
+        "__coverage__",
         "rewire",
       ]
     }
