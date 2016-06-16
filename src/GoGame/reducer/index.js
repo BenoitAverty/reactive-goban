@@ -5,7 +5,7 @@ import playMoveReducer from './playMoveReducer';
 import setMarkReducer from './setMarkReducer';
 
 const initialGame = {
-  board: _map(Array(19), () => _map(Array(19), {})),
+  board: _map(Array(19), () => _map(Array(19), () => ({}))),
   moves: [],
   koCoordinates: null,
   actions: [],

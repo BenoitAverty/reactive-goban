@@ -13,6 +13,18 @@ describe('Game Reducer', () => {
 
       expect(result).to.equal(state);
     });
+
+    it('Should return an object with a correct board', () => {
+      const newGame = goGameReducer(undefined, actions.init());
+
+      expect(newGame.board).to.exist;
+      newGame.board.forEach((row) => {
+        expect(row).to.exist.and.have.length(19);
+        row.forEach((intersection) => {
+          expect(intersection).to.deep.equal({});
+        });
+      });
+    });
   });
 
   describe('With the playMove(i,j) action', () => {

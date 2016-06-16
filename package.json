@@ -7,9 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "npm run clean:coverage && npm run test:run && npm run test:check-coverage",
-    "test:run": "cross-env BABEL_ENV=test nyc --reporter=lcov --reporter=clover mocha --compilers js:babel-core/register --recursive",
-    "test:debug": "mocha --recursive --compilers js:babel-core/register --debug-brk",
+    "test": "cross-env BABEL_ENV=test mocha --compilers js:babel-core/register --recursive",
+    "test:with-coverage": "npm run clean:coverage && cross-env BABEL_ENV=test nyc --reporter=lcov mocha --compilers js:babel-core/register --recursive",
     "test:check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "test:publish-coverage": "cat ./coverage/lcov.info | codecov",
     "prebuild": "npm run clean",
@@ -48,11 +47,11 @@
     "babel-loader": "^6.2.4",
     "babel-plugin-__coverage__": "^1.11.111",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-rewire": "^1.0.0-rc-3",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.5.0",
     "chai": "^3.5.0",
-    "chai-enzyme": "^0.4.2",
     "codecov.io": "^0.1.6",
     "commitizen": "^2.8.2",
     "cross-env": "^1.0.8",
@@ -63,11 +62,15 @@
     "eslint-plugin-import": "^1.8.0",
     "eslint-plugin-jsx-a11y": "^1.2.2",
     "eslint-plugin-react": "^5.1.1",
+    "ghooks": "^1.2.4",
     "mocha": "^2.5.1",
     "npm-run-all": "^2.1.2",
     "nyc": "^6.4.4",
     "rimraf": "^2.5.2",
     "semantic-release": "^4.3.5",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0",
+    "validate-commit-msg": "^2.6.1",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
@@ -82,6 +85,10 @@
     "rx": "^4.1.0"
   },
   "config": {
+    "ghooks": {
+      "pre-commit": "npm run test:with-coverage -- -R dot && npm run test:check-coverage",
+      "commit-msg": "validate-commit-msg"
+    },
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }

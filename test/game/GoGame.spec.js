@@ -1,16 +1,18 @@
 /* eslint-env mocha */
 import _ from 'lodash';
-import { expect } from 'chai';
+import chai, { expect } from 'chai';
+import sinon from 'sinon';
+import sinonChai from 'sinon-chai';
+chai.use(sinonChai);
 
-import { GoGame } from '../../src';
+import { GoGame, actions, goGameReducer } from '../../src';
 
 describe('GoGame', () => {
   describe('default / empty GoGame object', () => {
-    it('Should contain a 19x19 array of empty objects', () => {
+    it('Should return the result of the reducer with init action', () => {
       const game = new GoGame();
-      const expected = _.map(Array(19), () => _.map(Array(19), {}));
 
-      expect(game.board).to.deep.equal(expected);
+      expect(game).to.deep.equal(new GoGame(goGameReducer(undefined, actions.init())));
     });
 
     it('Should have the ko property set to false', () => {
@@ -47,6 +49,47 @@ describe('GoGame', () => {
       const game = new GoGame();
 
       expect(game.turn).to.equal('BLACK');
+    });
+  });
+
+  /* eslint-disable no-underscore-dangle */
+  describe('Shortcuts methods', () => {
+    const resultGame = { board: [], moves: [], actions: [] };
+    const reducerStub = sinon.stub().returns(resultGame);
+    before(() => {
+      GoGame.__Rewire__('goGameReducer', reducerStub);
+    });
+    after(() => {
+      GoGame.__ResetDependency__('goGameReducer');
+    });
+
+    it('Should not include the init() action', () => {
+      const game = new GoGame();
+      expect(game.init).to.not.exist;
+    });
+
+    const methods = {
+      playMove: [3, 3],
+      pass: [],
+      setMark: [{ i: 3, j: 3 }, 'test'],
+    };
+
+    _.forOwn(methods, (actionArgs, action) => {
+      describe(`${action} method`, () => {
+        it(`Should call the reducer with itself and actions.${action}(), passing its args`, () => {
+          const game = new GoGame();
+          game[action](...actionArgs);
+
+          expect(reducerStub).to.have.been.calledWith(game, actions[action](...actionArgs));
+        });
+
+        it('Should return the result of the reducer as a GoGame object', () => {
+          const game = new GoGame();
+          const actual = game[action](...actionArgs);
+
+          expect(actual).to.deep.equal(new GoGame(resultGame));
+        });
+      });
     });
   });
 });

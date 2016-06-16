@@ -1,3 +1,5 @@
+import _forOwn from 'lodash/forOwn';
+
 import goGameReducer from './reducer';
 import actions from './actions';
 
@@ -18,5 +20,13 @@ GoGame.prototype = {
     return 'BLACK';
   },
 };
+
+_forOwn(actions, (actionCreator, actionName) => {
+  if (actionName !== 'init') {
+    GoGame.prototype[actionName] = function goGameShortcutMethod(...args) {
+      return new GoGame(goGameReducer(this, actionCreator(...args)));
+    };
+  }
+});
 
 export default GoGame;
