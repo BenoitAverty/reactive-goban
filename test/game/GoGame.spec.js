@@ -54,17 +54,40 @@ describe('GoGame', () => {
   });
 
   /* eslint-disable no-underscore-dangle */
-  describe('playMove method', () => {
-    it('Should call the reducer with the playMove action and return the result', () => {
-      const resultGame = {};
-      const reducerStub = sinon.stub().returns(resultGame);
+  describe('Shortcuts methods', () => {
+    const resultGame = { board: [], moves: [], actions: [] };
+    const reducerStub = sinon.stub().returns(resultGame);
+    before(() => {
       GoGame.__Rewire__('goGameReducer', reducerStub);
+    });
+
+    it('Should not include the init() action', () => {
       const game = new GoGame();
+      expect(game.init).to.not.exist;
+    });
 
-      const actual = game.playMove({ i: 3, j: 3 });
+    const methods = {
+      playMove: [3, 3],
+      pass: [],
+      setMark: [{ i: 3, j: 3 }, 'test'],
+    };
 
-      expect(reducerStub).to.have.been.calledWith(game, actions.playMove(3, 3));
-      expect(actual).to.equal(resultGame);
+    _.forIn(methods, (actionArgs, action) => {
+      describe(`${action} method`, () => {
+        it(`Should call the reducer with itself and actions.${action}(), passing its args`, () => {
+          const game = new GoGame();
+          game[action](...actionArgs);
+
+          expect(reducerStub).to.have.been.calledWith(game, actions[action](...actionArgs));
+        });
+
+        it('Should return the result of the reducer as a GoGame object', () => {
+          const game = new GoGame();
+          const actual = game[action](...actionArgs);
+
+          expect(actual).to.deep.equal(new GoGame(resultGame));
+        });
+      });
     });
   });
 });

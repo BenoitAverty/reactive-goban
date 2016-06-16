@@ -1,3 +1,5 @@
+import _forIn from 'lodash/forIn';
+
 import goGameReducer from './reducer';
 import actions from './actions';
 
@@ -17,9 +19,14 @@ GoGame.prototype = {
   get turn() {
     return 'BLACK';
   },
-  playMove({ i, j }) {
-    return goGameReducer(this, actions.playMove(i, j));
-  },
 };
+
+_forIn(actions, (actionCreator, actionName) => {
+  if (actionName !== 'init') {
+    GoGame.prototype[actionName] = function goGameShortcutMethod(...args) {
+      return new GoGame(goGameReducer(this, actionCreator(...args)));
+    };
+  }
+});
 
 export default GoGame;
