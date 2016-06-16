@@ -59,6 +59,9 @@ describe('GoGame', () => {
     before(() => {
       GoGame.__Rewire__('goGameReducer', reducerStub);
     });
+    after(() => {
+      GoGame.__ResetDependency__('goGameReducer');
+    });
 
     it('Should not include the init() action', () => {
       const game = new GoGame();
