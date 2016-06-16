@@ -5,15 +5,14 @@ import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 chai.use(sinonChai);
 
-import { GoGame, actions } from '../../src';
+import { GoGame, actions, goGameReducer } from '../../src';
 
 describe('GoGame', () => {
   describe('default / empty GoGame object', () => {
-    it('Should contain a 19x19 array of empty objects', () => {
+    it('Should return the result of the reducer with init action', () => {
       const game = new GoGame();
-      const expected = _.map(Array(19), () => _.map(Array(19), {}));
 
-      expect(game.board).to.deep.equal(expected);
+      expect(game).to.deep.equal(new GoGame(goGameReducer(undefined, actions.init())));
     });
 
     it('Should have the ko property set to false', () => {
@@ -72,7 +71,7 @@ describe('GoGame', () => {
       setMark: [{ i: 3, j: 3 }, 'test'],
     };
 
-    _.forIn(methods, (actionArgs, action) => {
+    _.forOwn(methods, (actionArgs, action) => {
       describe(`${action} method`, () => {
         it(`Should call the reducer with itself and actions.${action}(), passing its args`, () => {
           const game = new GoGame();

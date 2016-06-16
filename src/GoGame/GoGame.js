@@ -1,4 +1,4 @@
-import _forIn from 'lodash/forIn';
+import _forOwn from 'lodash/forOwn';
 
 import goGameReducer from './reducer';
 import actions from './actions';
@@ -21,7 +21,7 @@ GoGame.prototype = {
   },
 };
 
-_forIn(actions, (actionCreator, actionName) => {
+_forOwn(actions, (actionCreator, actionName) => {
   if (actionName !== 'init') {
     GoGame.prototype[actionName] = function goGameShortcutMethod(...args) {
       return new GoGame(goGameReducer(this, actionCreator(...args)));
