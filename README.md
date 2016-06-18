@@ -7,6 +7,17 @@ A Javascript object representation of a Go Game, and several solutions to render
 [![Code Climate](https://img.shields.io/codeclimate/github/BenoitAverty/reactive-goban.svg)](https://codeclimate.com/github/BenoitAverty/reactive-goban)
 [![npm](https://img.shields.io/npm/v/reactive-goban.svg)](https://npmjs.com/package/reactive-goban)
 
+ - [**Disclaimer**](#disclaimer)
+ - [**Motivation**](#motivation)
+ - [**Installation**](#installation)
+ - [**Usage**](#usage)
+   - [**The GoGame object**](#the-gogame-object)
+   - [**Reducer and Actions (Redux or similar paradigm)**](#reducer-and-actions-redux-or-similar-paradigm)
+   - [**Rendering with the React component**](#rendering-with-the-react-component)
+   - [**With RxJS and CycleJS**](#with-rxjs-and-cyclejs)
+ - [**Documentation**](#documentation)
+
+
 ## Disclaimer
 
 The library is in prerelease and in heavy development. Expect breaking changes and bugs until the 1.0.0 version is published.
