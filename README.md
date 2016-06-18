@@ -113,6 +113,35 @@ ReactDom.render(
 ```
 
 ### With RxJS and CycleJS
+```javascript
+var CycleGoban = require('reactive-goban').CycleGoban; var gobanClicks = require('reactive-goban').gobanClicks; // CommonJS
+const { CycleGoban, gobanClicks } = require('reactiveGoban'); // CommonJS with ES6
+import { CycleGoban, gobanClicks } from 'reactive-goban'; // ES6 module
+var CycleGoban = reactiveGoban.CycleGoban; var gobanClicks = reactiveGoban.gobanClicks; // in the browser with script tag
+```
+
+The CycleGoban component is a CycleJS component, which take as source a RxJS Observable of game objects (result of the reducer most likely) called games$ and returns in the DOM sink an Observable of hyperscript vtrees representing the goban. Pass this Observable to the DOM driver and you'll have the same result as the React component.
+
+Additionally, the function "gobanClicks" takes the DOM source from CycleJS's DOM driver and returns an Observable of click events on the goban with their coordinates.
+
+```javascript
+function main({ DOM }) {
+  const games$ = gobanClicks(DOM)
+    .map({ i, j } => actions.playMove(i,j))
+    .startWith(actions.init())
+    .scan(goGameReducer, undefined);
+
+  const gobanVtrees$ = CycleGoban(actions).DOM;
+
+  return {
+    DOM: gobanVtrees$,
+  };
+}
+
+Cycle.run(main, {
+  DOM: makeDOMDriver('#app'),
+});
+```
 
 ## Documentation
 
