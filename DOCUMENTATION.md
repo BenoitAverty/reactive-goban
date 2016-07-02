@@ -25,13 +25,28 @@ Create an action that represents a move being played on the board at row i and c
 
 Create an action that represents a "pass" from a player.
 
- - ***actions.setMark(coordinates, mark: String) : action object***
+ - ***actions.setMark(coordinates : Object, mark: String) : action object***
 
 Create an action that will set a mark on the board. the ```coordinates``` object must have properties i (row) and j (column) to represent where the mark will be set.
 
 The ```mark``` parameter represents which mark will be set. Il can be any string : a one character mark will be displayed on the board, the others will become a css class useful for rendering the goban (see CycleGoban and ReactGoban). Default mark is "cross".
 
 ## goGameReducer function
+
+The goGameReducer contains all the business logic of the library. It is responsible to build a new object based on a previous object and an action.
+
+***goGameReducer(game : game Object, action : action object) : game Object***.
+
+The returned object is immutable, and is not an instance of the GoGame constructor function.
+
+In all cases, an object is added at the end of the game.actions property (a list). This object contains an `action` property that contains the action that was passed to the reducer, a `status` property ('SUCCESS' or 'FAILURE'), and a `reason` property (if the status is failure).
+
+Here are all the transformations made for each action:
+
+- With a "playMove" action: Adds an object at the end of the `moves` property with the coordinates of the move (if successful). If there are captures, they are present in the last `action` object. The `board` object is also modified according to the move.
+- With a "pass" action: Adds an empty object in the `moves` property.
+- With a "setMark" action: Modifies the board to set a mark ath the coordinates specified. The mark can be a string or a single character. If it's a string, it'll be stripped of any special chars, set to lower case and it will be trimmed. If it's a single character, it will be trimmed (cannot be a blank char) but no other transformation will be applied.
+- With an "init" action: The game parameter of the object is returned as is (same reference).
 
 ## GoGame constructor function
 
