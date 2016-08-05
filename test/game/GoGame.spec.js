@@ -3,9 +3,10 @@ import _ from 'lodash';
 import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
-chai.use(sinonChai);
 
 import { GoGame, actions, goGameReducer } from '../../src';
+
+chai.use(sinonChai);
 
 describe('GoGame', () => {
   describe('default / empty GoGame object', () => {
