@@ -18,6 +18,8 @@ after_success:
   - npm run test:publish-coverage
   # No need to build as it is done in the prepublish script
   - npm run semantic-release
+after_failure:
+  - npm run test:publish-coverage
 branches:
   only:
     - master
