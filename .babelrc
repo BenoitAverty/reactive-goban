@@ -4,9 +4,10 @@
   "env": {
     "test": {
       "plugins": [
-        "__coverage__",
+        "istanbul",
         "rewire",
-      ]
+      ],
+      "sourceMap": "inline"
     }
   }
 }
