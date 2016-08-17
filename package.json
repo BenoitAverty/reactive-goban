@@ -64,7 +64,7 @@
     "eslint-plugin-react": "^6.0.0",
     "ghooks": "^1.2.4",
     "mocha": "^3.0.0",
-    "npm-run-all": "^2.1.2",
+    "npm-run-all": "^3.0.0",
     "nyc": "^8.1.0",
     "rimraf": "^2.5.2",
     "semantic-release": "^4.3.5",
