@@ -7,7 +7,7 @@
         "istanbul",
         "rewire",
       ],
-      "sourceMap": "inline"
+      "sourceMaps": "inline"
     }
   }
 }
