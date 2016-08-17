@@ -6,6 +6,14 @@ import { expect } from 'chai';
 import { goGameReducer, GoGame, actions } from '../../src';
 
 describe('Game Reducer', () => {
+  describe('With invalid arguments', () => {
+    it('Should return initialGame', () => {
+      const result = goGameReducer();
+
+      expect(result).to.exist;
+    });
+  });
+
   describe('With the init() action', () => {
     it('Should return the previous state', () => {
       const state = {};

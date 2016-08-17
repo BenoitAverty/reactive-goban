@@ -14,7 +14,8 @@ const initialGame = {
 const goGameReducer = (game = initialGame, action) => {
   let resultGame;
 
-  switch (action.type) {
+  /* istanbul ignore next */
+  switch (action && action.type) {
     case 'PASS':
       resultGame = {
         ...game,
