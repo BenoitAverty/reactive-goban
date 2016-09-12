@@ -30,18 +30,18 @@ The library is available as a npm package :
 
     npm install reactive-goban --save
 
-If you're not using npm, a bundle is also available. You can get it on npmcdn :
+If you're not using npm, a bundle is also available. You can get it on unpkg :
 
-    <script type="text/javascript" src="http://npmcdn.com/reactive-goban/dist/reactive-goban.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/reactive-goban/dist/reactive-goban.js"></script>
 
 or in minified version :
 
-    <script type="text/javascript" src="http://npmcdn.com/reactive-goban/dist/reactive-goban.min.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/reactive-goban/dist/reactive-goban.min.js"></script>
 
 both version allow for a specific version (especially advised if you use the cdn in production) :
 
     npm install reactive-goban@0.2.0 --save
-    <script type="text/javascript" src="http://npmcdn.com/reactive-goban@0.2.0/dist/reactive-goban.min.js"></script>
+    <script type="text/javascript" src="http://unpkg.com/reactive-goban@0.2.0/dist/reactive-goban.min.js"></script>
 
 ## Usage
 
