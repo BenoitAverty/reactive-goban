@@ -57,7 +57,7 @@
     "cross-env": "^2.0.0",
     "cz-conventional-changelog": "^1.1.6",
     "enzyme": "^2.3.0",
-    "eslint": "^3.2.2",
+    "eslint": "^3.9.0",
     "eslint-config-airbnb": "^10.0.0",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
