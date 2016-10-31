@@ -79,7 +79,7 @@
     "in-publish": "^2.0.0",
     "deep-freeze": "0.0.1",
     "diacritics": "^1.2.3",
-    "lodash": "^4.13.1",
+    "lodash": "^4.16.5",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "rx": "^4.1.0"
