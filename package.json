@@ -67,7 +67,7 @@
     "npm-run-all": "^3.0.0",
     "nyc": "^8.1.0",
     "rimraf": "^2.5.2",
-    "semantic-release": "^4.3.5",
+    "semantic-release": "^6.3.2",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
     "validate-commit-msg": "^2.6.1",
