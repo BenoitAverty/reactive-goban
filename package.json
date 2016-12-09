@@ -43,7 +43,7 @@
   "devDependencies": {
     "@cycle/core": "^6.0.3",
     "babel-cli": "^6.9.0",
-    "babel-core": "^6.9.0",
+    "babel-core": "^6.20.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-istanbul": "^2.0.0",
     "babel-plugin-add-module-exports": "^0.2.1",
