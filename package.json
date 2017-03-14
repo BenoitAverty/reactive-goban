@@ -54,7 +54,7 @@
     "chai": "^3.5.0",
     "codecov": "^1.0.1",
     "commitizen": "^2.8.2",
-    "cross-env": "^2.0.0",
+    "cross-env": "^3.2.4",
     "cz-conventional-changelog": "^1.1.6",
     "enzyme": "^2.3.0",
     "eslint": "^3.2.2",
