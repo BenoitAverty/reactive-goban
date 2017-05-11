@@ -1,5 +1,7 @@
 # reactive-goban
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/BenoitAverty/reactive-goban.svg)](https://greenkeeper.io/)
+
 A Javascript object representation of a Go Game, and several solutions to render it in the browser.
 
 [![Travis](https://img.shields.io/travis/BenoitAverty/reactive-goban/master.svg)](https://travis-ci.org/BenoitAverty/reactive-goban)
